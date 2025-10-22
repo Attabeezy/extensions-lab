@@ -1,0 +1,13 @@
+{
+  "name": "X-Search Omnibox",
+  "description": "Use 'x' in the Chrome address bar to search ChatGPT, YouTube, GitHub, Reddit, Stack Overflow, and arXiv.",
+  "version": "1.1",
+  "manifest_version": 3,
+  "omnibox": {
+    "keyword": "x"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["tabs"]
+}

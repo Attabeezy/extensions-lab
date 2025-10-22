@@ -1,0 +1,22 @@
+{
+  "name": "Auto Picture-in-Picture",
+  "version": "1.0",
+  "description": "Automatically enters picture-in-picture mode when you switch tabs or minimize the browser.",
+  "manifest_version": 3,
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
