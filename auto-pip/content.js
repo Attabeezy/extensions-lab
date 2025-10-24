@@ -1,7 +1,12 @@
 // Listen for messages from background script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'enablePiP') {
-    enablePictureInPicture();
+    // Check for user activation before attempting to enable PiP
+    if (navigator.userActivation.hasBeenActive) {
+      enablePictureInPicture();
+    } else {
+      console.log('Cannot enable Picture-in-Picture without user activation.');
+    }
   }
 });
 

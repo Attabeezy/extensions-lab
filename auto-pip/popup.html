@@ -1,67 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Auto Picture-in-Picture</title>
+  <title>Auto PiP Settings</title>
   <style>
     body {
-      width: 300px;
-      padding: 20px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      margin: 0;
-      background: #f5f5f5;
+      width: 220px;
+      font-family: sans-serif;
+      text-align: center;
     }
-    
-    .container {
-      background: white;
-      border-radius: 8px;
-      padding: 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    h1 {
-      margin: 0 0 15px 0;
-      font-size: 18px;
-      color: #333;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .icon {
-      font-size: 24px;
-    }
-    
-    .toggle-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 15px 0;
-      border-top: 1px solid #e0e0e0;
-      border-bottom: 1px solid #e0e0e0;
-      margin: 15px 0;
-    }
-    
-    .toggle-label {
-      font-size: 14px;
-      color: #555;
-      font-weight: 500;
-    }
-    
     .switch {
       position: relative;
       display: inline-block;
-      width: 50px;
-      height: 28px;
+      width: 60px;
+      height: 34px;
     }
-    
     .switch input {
       opacity: 0;
       width: 0;
       height: 0;
     }
-    
     .slider {
       position: absolute;
       cursor: pointer;
@@ -70,110 +27,35 @@
       right: 0;
       bottom: 0;
       background-color: #ccc;
-      transition: .3s;
-      border-radius: 28px;
+      transition: .4s;
+      border-radius: 34px;
     }
-    
     .slider:before {
       position: absolute;
       content: "";
-      height: 20px;
-      width: 20px;
+      height: 26px;
+      width: 26px;
       left: 4px;
       bottom: 4px;
       background-color: white;
-      transition: .3s;
+      transition: .4s;
       border-radius: 50%;
     }
-    
     input:checked + .slider {
-      background-color: #4CAF50;
+      background-color: #2196F3;
     }
-    
     input:checked + .slider:before {
-      transform: translateX(22px);
-    }
-    
-    .description {
-      font-size: 13px;
-      color: #666;
-      line-height: 1.5;
-      margin-bottom: 15px;
-    }
-    
-    .status {
-      padding: 10px;
-      border-radius: 4px;
-      font-size: 12px;
-      text-align: center;
-      margin-top: 15px;
-    }
-    
-    .status.enabled {
-      background: #e8f5e9;
-      color: #2e7d32;
-    }
-    
-    .status.disabled {
-      background: #ffebee;
-      color: #c62828;
-    }
-    
-    .info {
-      font-size: 12px;
-      color: #888;
-      margin-top: 15px;
-      padding-top: 15px;
-      border-top: 1px solid #e0e0e0;
-    }
-    
-    .info-item {
-      margin: 8px 0;
-      display: flex;
-      align-items: flex-start;
-    }
-    
-    .info-icon {
-      margin-right: 8px;
-      color: #4CAF50;
+      transform: translateX(26px);
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>
-      <span class="icon">🎬</span>
-      Auto Picture-in-Picture
-    </h1>
-    
-    <p class="description">
-      Automatically enables picture-in-picture mode when you switch away from a tab with a playing video.
-    </p>
-    
-    <div class="toggle-container">
-      <span class="toggle-label">Enable Auto PiP</span>
-      <label class="switch">
-        <input type="checkbox" id="enableToggle" checked>
-        <span class="slider"></span>
-      </label>
-    </div>
-    
-    <div id="status" class="status enabled">
-      ✓ Auto PiP is enabled
-    </div>
-    
-    <div class="info">
-      <div class="info-item">
-        <span class="info-icon">💡</span>
-        <span>Switch tabs to trigger PiP automatically</span>
-      </div>
-      <div class="info-item">
-        <span class="info-icon">🎯</span>
-        <span>Works with YouTube, Vimeo, and most video sites</span>
-      </div>
-    </div>
-  </div>
-  
+  <h3>Auto Picture-in-Picture</h3>
+  <label class="switch">
+    <input type="checkbox" id="toggleSwitch">
+    <span class="slider"></span>
+  </label>
+  <p id="statusText">Enabled</p>
   <script src="popup.js"></script>
 </body>
 </html>
