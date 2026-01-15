@@ -1,14 +1,10 @@
 {
   "manifest_version": 3,
   "name": "Auto Picture-in-Picture",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Automatically enables picture-in-picture mode when you switch away from a video tab",
   "permissions": [
-    "tabs",
-    "activeTab",
-    "scripting",
-    "storage",
-    "notifications"
+    "storage"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -20,7 +16,8 @@
     {
       "matches": ["<all_urls>"],
       "js": ["content.js"],
-      "run_at": "document_idle"
+      "run_at": "document_end",
+      "all_frames": false
     }
   ],
   "action": {

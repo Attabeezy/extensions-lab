@@ -4,7 +4,7 @@ const statusDiv = document.getElementById('status');
 
 // Load current state from storage
 chrome.storage.sync.get(['enabled'], (result) => {
-  const isEnabled = result.enabled !== false; // Default to true
+  const isEnabled = result.enabled !== false;
   enableToggle.checked = isEnabled;
   updateStatus(isEnabled);
 });
@@ -18,6 +18,14 @@ enableToggle.addEventListener('change', async () => {
   
   // Update status display
   updateStatus(isEnabled);
+  
+  // Reload all tabs to apply changes
+  const tabs = await chrome.tabs.query({});
+  tabs.forEach(tab => {
+    if (tab.url && !tab.url.startsWith('chrome://') && !tab.url.startsWith('edge://')) {
+      chrome.tabs.reload(tab.id).catch(() => {});
+    }
+  });
 });
 
 /**
