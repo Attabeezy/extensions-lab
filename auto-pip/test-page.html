@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Auto PiP Extension - Test Page</title>
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #f5f5f5;
+    }
+    h1 { color: #333; }
+    h2 { color: #555; margin-top: 30px; }
+    video { 
+      width: 640px;
+      height: 360px;
+      background: #000;
+      display: block;
+      margin: 10px 0;
+    }
+    .test-section { 
+      margin: 20px 0;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    button { 
+      padding: 10px 20px;
+      margin: 5px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    button.secondary {
+      background: #2196F3;
+    }
+    button.secondary:hover {
+      background: #0b7dda;
+    }
+    .status {
+      padding: 10px;
+      background: #e8f5e9;
+      border-left: 4px solid #4CAF50;
+      margin: 10px 0;
+    }
+    .warning {
+      padding: 10px;
+      background: #fff3e0;
+      border-left: 4px solid #ff9800;
+      margin: 10px 0;
+    }
+    .error {
+      padding: 10px;
+      background: #ffebee;
+      border-left: 4px solid #f44336;
+      margin: 10px 0;
+    }
+    ol, ul {
+      line-height: 1.8;
+    }
+    code {
+      background: #f5f5f5;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+    #debugInfo {
+      background: #1e1e1e;
+      color: #00ff00;
+      padding: 15px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      border-radius: 4px;
+      max-height: 300px;
+      overflow-y: auto;
+      line-height: 1.6;
+    }
+    .video-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .video-box {
+      flex: 1;
+      min-width: 300px;
+    }
+    .test-passed {
+      color: #4CAF50;
+      font-weight: bold;
+    }
+    .test-failed {
+      color: #f44336;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎬 Auto PiP Extension - Comprehensive Test Page</h1>
+  
+  <div class="status">
+    <strong>✓ Test Page Loaded Successfully</strong><br>
+    This page helps you thoroughly test the Auto Picture-in-Picture extension.
+  </div>
+
+  <div class="test-section">
+    <h2>📋 Pre-Test Checklist</h2>
+    <ul>
+      <li>Extension is installed and enabled ✓</li>
+      <li>Open extension popup and enable <strong>Debug Mode</strong></li>
+      <li>Open browser console (F12) to see debug logs</li>
+      <li>Verify green debug indicator appears in top-right corner</li>
+    </ul>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 1: Single Video - Basic Functionality</h2>
+    <p>Tests if PiP activates with ANY page interaction (not just video clicks)</p>
+    <video controls id="video1">
+      <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+      Your browser doesn't support HTML5 video.
+    </video>
+    <br>
+    <button onclick="playVideo('video1')">▶ Play Video</button>
+    <button class="secondary" onclick="openNewTab()">🗂 Open New Tab</button>
+    
+    <div class="warning" style="margin-top: 10px;">
+      <strong>Test Steps:</strong><br>
+      1. Click "Play Video"<br>
+      2. Click "Open New Tab"<br>
+      3. Return to this tab<br>
+      4. Click ANYWHERE on this page (not necessarily the video)<br>
+      5. <strong>Expected:</strong> PiP should activate immediately
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 2: Multiple Videos - Smart Selection</h2>
+    <p>Tests if extension selects the LARGEST playing video (ignoring smaller ads)</p>
+    
+    <div class="video-container">
+      <div class="video-box">
+        <p><strong>Small Video (simulated ad)</strong></p>
+        <video controls width="320" height="180" id="video2-small">
+          <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" type="video/mp4">
+        </video>
+      </div>
+      
+      <div class="video-box">
+        <p><strong>Large Video (main content)</strong></p>
+        <video controls width="640" height="360" id="video2-large">
+          <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+    
+    <button onclick="playMultiple()">▶ Play Both Videos</button>
+    <button class="secondary" onclick="openNewTab()">🗂 Open New Tab</button>
+    
+    <div class="warning" style="margin-top: 10px;">
+      <strong>Expected Result:</strong> The LARGER video should enter PiP, not the small one
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 3: Keyboard Interaction</h2>
+    <p>Tests if keyboard interactions (not just clicks) trigger PiP</p>
+    <video controls id="video3">
+      <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" type="video/mp4">
+    </video>
+    <br>
+    <button onclick="playVideo('video3')">▶ Play Video</button>
+    <button class="secondary" onclick="openNewTab()">🗂 Open New Tab</button>
+    
+    <div class="warning" style="margin-top: 10px;">
+      <strong>Test Steps:</strong><br>
+      1. Play video and switch tabs<br>
+      2. Return to this tab<br>
+      3. Press ANY KEY (spacebar, arrow keys, etc.)<br>
+      4. <strong>Expected:</strong> PiP activates from keyboard gesture
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 4: Paused Video (Negative Test)</h2>
+    <p>Tests that PiP does NOT activate for paused videos</p>
+    <video controls id="video4">
+      <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4" type="video/mp4">
+    </video>
+    <br>
+    <button onclick="playThenPause('video4')">▶ Play Then Pause</button>
+    <button class="secondary" onclick="openNewTab()">🗂 Open New Tab</button>
+    
+    <div class="warning" style="margin-top: 10px;">
+      <strong>Expected Result:</strong> PiP should NOT activate (video is paused)<br>
+      Debug log should show: "Best video is paused, skipping PiP attempt"
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 5: Rapid Tab Switching</h2>
+    <p>Tests stability with rapid tab switches</p>
+    <video controls id="video5">
+      <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" type="video/mp4">
+    </video>
+    <br>
+    <button onclick="playVideo('video5')">▶ Play Video</button>
+    <button class="secondary" onclick="rapidTabSwitch()">⚡ Rapid Tab Switch Test</button>
+    
+    <div class="warning" style="margin-top: 10px;">
+      <strong>Test Steps:</strong><br>
+      1. Play video<br>
+      2. Click "Rapid Tab Switch Test" (opens/closes 5 tabs quickly)<br>
+      3. Click anywhere on page<br>
+      4. <strong>Expected:</strong> Only ONE PiP activation, no errors
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>🐛 Debug Information</h2>
+    <p>Real-time event logging (also check browser console for detailed Auto PiP logs)</p>
+    <button onclick="clearDebug()">🗑 Clear Logs</button>
+    <button class="secondary" onclick="exportLogs()">💾 Export Logs</button>
+    <div id="debugInfo">Waiting for events...</div>
+  </div>
+
+  <div class="test-section">
+    <h2>✅ Manual Test Results</h2>
+    <p>Check off tests as you complete them:</p>
+    <ul>
+      <li><input type="checkbox" id="test1"> <label for="test1">Test 1: Basic functionality with any click</label></li>
+      <li><input type="checkbox" id="test2"> <label for="test2">Test 2: Largest video selected</label></li>
+      <li><input type="checkbox" id="test3"> <label for="test3">Test 3: Keyboard interaction works</label></li>
+      <li><input type="checkbox" id="test4"> <label for="test4">Test 4: Paused video ignored (correct)</label></li>
+      <li><input type="checkbox" id="test5"> <label for="test5">Test 5: Rapid switching handled gracefully</label></li>
+    </ul>
+    <button onclick="checkResults()">📊 View Test Summary</button>
+  </div>
+
+  <div class="test-section">
+    <h2>🔧 Troubleshooting</h2>
+    <h3>If PiP Doesn't Work:</h3>
+    <ol>
+      <li>Verify debug indicator shows <code>Should PiP: true</code> after tab switch</li>
+      <li>Check console for <span class="test-failed">red error messages</span></li>
+      <li>Ensure video is actually playing (not paused/loading)</li>
+      <li>Try different interaction types (click, keyboard, mousedown)</li>
+      <li>Reload extension and try again</li>
+    </ol>
+    
+    <h3>Common Issues:</h3>
+    <ul>
+      <li><strong>NotAllowedError:</strong> Gesture not captured - click sooner after tab switch</li>
+      <li><strong>InvalidStateError:</strong> Video not ready - wait for it to load fully</li>
+      <li><strong>No videos found:</strong> Page still loading or videos in iframes</li>
+    </ul>
+  </div>
+
+  <script>
+    let eventLog = [];
+    
+    function log(message, type = 'info') {
+      const timestamp = new Date().toLocaleTimeString();
+      const color = type === 'error' ? '#ff5555' : type === 'warn' ? '#ffff55' : '#00ff00';
+      const entry = `<span style="color: ${color};">[${timestamp}] ${message}</span>`;
+      eventLog.push(entry);
+      
+      const debugDiv = document.getElementById('debugInfo');
+      debugDiv.innerHTML = eventLog.slice(-20).join('<br>');
+      debugDiv.scrollTop = debugDiv.scrollHeight;
+    }
+    
+    function playVideo(videoId) {
+      const video = document.getElementById(videoId);
+      video.play();
+      log(`▶ Playing video: ${videoId}`);
+    }
+    
+    function playMultiple() {
+      document.getElementById('video2-small').play();
+      document.getElementById('video2-large').play();
+      log('▶ Playing multiple videos');
+    }
+    
+    function playThenPause(videoId) {
+      const video = document.getElementById(videoId);
+      video.play();
+      setTimeout(() => {
+        video.pause();
+        log(`⏸ Paused video: ${videoId}`, 'warn');
+      }, 1000);
+    }
+    
+    function openNewTab() {
+      window.open('about:blank', '_blank');
+      log('🗂 Opened new tab', 'warn');
+    }
+    
+    function rapidTabSwitch() {
+      log('⚡ Starting rapid tab switch test...', 'warn');
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          const tab = window.open('about:blank', '_blank');
+          setTimeout(() => tab.close(), 200);
+        }, i * 300);
+      }
+    }
+    
+    function clearDebug() {
+      eventLog = [];
+      document.getElementById('debugInfo').innerHTML = 'Logs cleared. Waiting for events...';
+    }
+    
+    function exportLogs() {
+      const blob = new Blob([eventLog.join('\n').replace(/<[^>]*>/g, '')], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `auto-pip-test-logs-${Date.now()}.txt`;
+      a.click();
+      log('💾 Logs exported');
+    }
+    
+    function checkResults() {
+      const total = 5;
+      const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+      const percent = (checked / total * 100).toFixed(0);
+      
+      if (checked === total) {
+        alert(`✓ All tests passed! (${checked}/${total})\n\nExtension is working correctly!`);
+      } else {
+        alert(`Test Results: ${checked}/${total} passed (${percent}%)\n\nPlease review failed tests and debug logs.`);
+      }
+    }
+    
+    // Log page visibility changes
+    document.addEventListener('visibilitychange', () => {
+      const status = document.hidden ? 'HIDDEN' : 'VISIBLE';
+      log(`👁 Page visibility: ${status}`, 'warn');
+    });
+    
+    // Log user interactions
+    ['click', 'keydown', 'mousedown', 'touchstart'].forEach(eventType => {
+      document.addEventListener(eventType, (e) => {
+        if (e.target.tagName !== 'BUTTON') {
+          log(`🖱 User interaction: ${eventType} on ${e.target.tagName}`);
+        }
+      }, true);
+    });
+    
+    // Log when videos enter/leave PiP
+    document.querySelectorAll('video').forEach((video, index) => {
+      video.addEventListener('enterpictureinpicture', () => {
+        log(`✓✓✓ Video #${index + 1} entered PiP!`, 'warn');
+      });
+      
+      video.addEventListener('leavepictureinpicture', () => {
+        log(`Video #${index + 1} left PiP`, 'warn');
+      });
+    });
+    
+    // Initial log
+    log('🎬 Test page ready. Enable Debug Mode in extension popup!');
+    log('📋 Follow the test scenarios above and check for Auto PiP debug messages in console');
+  </script>
+</body>
+</html>
